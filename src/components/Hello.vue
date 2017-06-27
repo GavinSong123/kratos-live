@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import "normalize.css"
+
   export default {
     name: 'hello',
     data () {

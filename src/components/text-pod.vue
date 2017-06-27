@@ -1,18 +1,23 @@
 <template>
-
+  <section>
+    <div class="pod-container">
+    <span>
+      {{text}}
+      <slot></slot>
+    </span>
+    </div>
+  </section>
 </template>
 
 <script>
   export default {
 
+    props: ['text'],
+
     data(){
-      return {
-
-      }
+      return {}
     },
-    methods: {
-
-    },
+    methods: {},
     mounted(){
 
     }
@@ -20,5 +25,23 @@
 </script>
 
 <style scoped lang="scss">
+
+  section {
+    position: relative;
+    display: block;
+    max-width: 295px;
+    padding: 0;
+    text-align: left;
+  }
+
+  div.pod-container {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin: 0 auto 0 0;
+    padding: 12px;
+    border: 1px solid #E7EAEC;
+    border-radius: 3px;
+  }
 
 </style>
