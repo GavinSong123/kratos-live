@@ -20,4 +20,7 @@
     color: #2c3e50;
     margin-top: 60px;
   }
+  div {
+    box-sizing: border-box;
+  }
 </style>

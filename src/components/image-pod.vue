@@ -1,10 +1,7 @@
 <template>
   <section>
     <div class="pod-container">
-    <span>
-      {{text}}
-      <slot></slot>
-    </span>
+    <img :src="src"/>
     </div>
   </section>
 </template>
@@ -12,7 +9,7 @@
 <script>
   export default {
 
-    props: ['text'],
+    props: ['src'],
 
     data(){
       return {}
@@ -36,12 +33,16 @@
 
   div.pod-container {
     display: inline-block;
-    max-width: 295px;
+    max-width: 100%;
     overflow-wrap: break-word;
     margin: 0 auto 0 0;
     padding: 12px;
     border: 1px solid #E7EAEC;
     border-radius: 3px;
+
+    img {
+      max-width: 100%;
+    }
   }
 
 </style>

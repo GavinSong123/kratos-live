@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import PlayGround from "../components/play-ground.vue";
+import PlayGround from "../views/play-ground.vue";
 
 Vue.use(Router);
 
