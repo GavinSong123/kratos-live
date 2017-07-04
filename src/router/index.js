@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import PlayGround from "../views/play-ground.vue";
+import TestMessagePanel from '../views/message-panel-test.vue';
 
 Vue.use(Router);
 
@@ -10,12 +10,17 @@ export default new Router({
     {
       path: '/',
       name: 'Hello',
-      component: PlayGround
+      component: TestMessagePanel
     },
     {
       path: '/hello',
       name: 'Hello',
-      component: Hello
+      component: PlayGround
+    },
+    {
+      path: '/test-panel',
+      name: 'TestPanel',
+      component: TestMessagePanel
     }
   ]
 })

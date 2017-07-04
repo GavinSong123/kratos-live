@@ -1,0 +1,38 @@
+{
+   "teachers": [
+      {
+         "id": 1,
+         "name": "Zeo",
+         "title": "小助手",
+         "avatar": "/v1/img/zeo/png"
+      },
+      {
+         "id": 1,
+         "name": "大表姐",
+         "title": "讲师",
+         "avatar": "/v1/img/bot/png"
+      }
+   ],
+   "offset": 1497802126421,
+   "messages": [
+      {
+         "offset": 1497802126422,
+         "teacherId": 1,
+         "type": "word",
+         "resources": "欢迎来到大表姐的PPT课堂"
+      },
+      {
+         "offset": 1497802126422,
+         "teacherId": 2,
+         "type": "pic",
+         "resources": "/v1/img/2321321321/png"
+      },
+      {
+         "offset": 1497802126422,
+         "teacherId": 1,
+         "type": "sound",
+         "resources": "/v1/sound/ffd1111"
+      }
+   ]
+}
+

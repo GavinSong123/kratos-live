@@ -8,7 +8,12 @@
         <span class="name">{{name}} </span>
         <span class="title">{{title}}</span>
       </div>
-      <div class="message-container">
+      <div v-if="message" class="message-container">
+        <text-pod v-if="message.type == 'word'">{{message.resources}}</text-pod>
+        <image-pod v-if="message.type == 'pic'" :src="message.resources"></image-pod>
+        <audio-pod v-if="message.type == 'sound'" :src="message.resources"></audio-pod>
+      </div>
+      <div v-if="!message" class="message-container">
         <slot></slot>
       </div>
     </div>
@@ -16,9 +21,15 @@
 </template>
 
 <script>
-  export default {
+  import TextPod from '../components/text-pod.vue';
+  import AudioPod from '../components/audio-pod.vue';
+  import ImagePod from '../components/image-pod.vue';
+  import Message from '../components/message.vue';
 
-    props: ['title', 'name', 'avatarUrl'],
+  export default {
+    components: {TextPod, AudioPod, ImagePod, Message},
+
+    props: ['title', 'name', 'avatarUrl', 'message'],
 
     data(){
       return {}
