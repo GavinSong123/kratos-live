@@ -36,7 +36,7 @@
     },
     methods: {},
     mounted(){
-
+      this.$emit('mounted');
     }
   }
 </script>
@@ -47,6 +47,7 @@
     position: relative;
     display: block;
     /*max-width: 343px;*/
+    width: 100%;
     padding: 0;
     text-align: left;
     & > * {
@@ -69,7 +70,7 @@
   .content-container {
     display: inline-block;
     margin-left: 8px;
-
+    max-width: calc(100% - 51px);
   }
 
   .title-container {

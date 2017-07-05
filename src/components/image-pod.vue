@@ -39,7 +39,7 @@
     padding: 12px;
     border: 1px solid #E7EAEC;
     border-radius: 3px;
-
+    background: white;
     img {
       max-width: 100%;
     }

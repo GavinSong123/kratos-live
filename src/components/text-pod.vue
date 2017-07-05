@@ -42,6 +42,9 @@
     padding: 12px;
     border: 1px solid #E7EAEC;
     border-radius: 3px;
+    background: white;
+    color: #686B6D;
+    font-size: 14px;
   }
 
 </style>
