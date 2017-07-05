@@ -17,7 +17,7 @@ for (let i = 0; i < 100; i++) {
   mockScripts.teachers.push(teacher);
 }
 
-for (let i = 0; i < 2; i++) {
+for (let i = 0; i < 20; i++) {
   let message = {};
   message.teacherId = Mock.Random.integer(0, 99);
   message.offset = Mock.Random.integer(200, 1000);
