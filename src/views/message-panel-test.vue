@@ -8,15 +8,15 @@
         <span>更多</span>
       </div>
       <div class="expand" v-if="isExpanded" v-on:click="isExpanded = false">
-        <div class="expand-button">
+        <div class="expand-button" @click="onRefresh()">
           <img src="../assets/icon.svg">
           <span>刷新</span>
         </div>
-        <div class="expand-button">
+        <div class="expand-button" @click="onScrollTop()">
           <img src="../assets/icon.svg">
           <span>去往顶部</span>
         </div>
-        <div class="expand-button">
+        <div class="expand-button" @click="onScrollBottom()">
           <img src="../assets/icon.svg">
           <span>去往底部</span>
         </div>
@@ -35,6 +35,14 @@
         <div class="bottom-hint" v-if="isLastMessageLoaded">直播结束</div>
       </div>
     </div>
+    <div class="comment-panel">
+      <comment-panel ref="commentPanel"></comment-panel>
+    </div>
+    <div class="comment-input">
+      <img class="pre-icon" src="../assets/icon.svg">
+      <textarea class="input" rows="2" type="text" autofocus v-model="input"></textarea>
+      <span class="submit-button" @click="onSubmitClick()">发送</span>
+    </div>
   </section>
 </template>
 
@@ -44,9 +52,10 @@
   import ImagePod from '../components/image-pod.vue';
   import Message from '../components/message.vue';
   import mockScripts from '../mock/mock-script.json'
+  import CommentPanel from '../components/comment-panel.vue';
 
   export default {
-    components: {TextPod, AudioPod, ImagePod, Message},
+    components: {TextPod, AudioPod, ImagePod, Message, CommentPanel},
     data () {
       return {
         scriptSource: {},
@@ -55,8 +64,9 @@
         startTime: 0,
         curTime: 0,
         isLastMessageLoaded: false,
-        isExpanded: false
-    }
+        isExpanded: false,
+        input: ''
+      }
     },
 
     methods: {
@@ -87,15 +97,10 @@
 
         //2 .add to messages to render view
         this.messages.push(...needLoad);
-//        if (needLoad.length > 0) {
-//          this.scrollToCurrent();
-//        }
       },
 
       scrollToCurrent(){
-//        console.log(this.$refs.scroll.scrollTop);
-//        console.log(this.$refs.scroll.scrollHeight);
-        this.$refs.scroll.scrollTop = this.$refs.scroll.scrollHeight + 20;
+        this.$refs.scroll.scrollTop = this.$refs.scroll.scrollHeight + 60;
       },
 
       getNextMessage(){
@@ -104,6 +109,23 @@
 
       onLastMessageLoaded(){
         this.isLastMessageLoaded = true;
+      },
+
+      onRefresh(){
+        window.location.reload();
+      },
+
+      onScrollTop(){
+        this.$refs.scroll.scrollTop = 0;
+      },
+
+      onScrollBottom(){
+        this.$refs.scroll.scrollTop = this.$refs.scroll.scrollHeight + 60;
+      },
+
+      onSubmitClick(){
+        this.$refs.commentPanel.submitComment(this.input);
+        this.input='';
       }
     },
     mounted(){
@@ -173,6 +195,7 @@
       height: 64px;
       width: calc(100% - 92px);
       background: white;
+      border-radius: 2px;
       box-shadow: 0 0 4px 3px rgb(224, 226, 228);
       margin-left: 92px;
       margin-top: 10px;
@@ -242,7 +265,7 @@
   }
 
   .messages-scroll {
-    padding: 16px 17px;
+    padding: 16px 17px 75px 17px;
     background: rgb(240, 240, 241);
     min-height: 523px;
     .message {
@@ -259,6 +282,54 @@
       color: #686B6D;
       font-size: 12px;
       line-height: 25px;
+    }
+  }
+
+  div.comment-panel {
+    position: fixed;
+    bottom: 71px;
+    right: 12px;
+  }
+
+  div.comment-input {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 59px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: white;
+    box-shadow: 0 0 4px 3px rgb(224, 226, 228);
+
+    .input {
+      display: block;
+      border: none;
+      overflow: auto;
+      outline: none;
+      font-size: 16px;
+      width: calc(100% - 114px);
+      height: 45px;
+      color: #686B6D;
+    }
+
+    .pre-icon {
+      display: block;
+      width: 21px;
+      height: 21px;
+    }
+
+    .submit-button {
+      display: block;
+      width: 45px;
+      height: 35px;
+      text-align: center;
+      color: white;
+      font-size: 12px;
+      line-height: 35px;
+      background: #3A3434;
+      border-radius: 3px;
     }
   }
 
