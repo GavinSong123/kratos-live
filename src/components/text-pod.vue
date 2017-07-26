@@ -14,11 +14,11 @@
 
     props: ['text'],
 
-    data(){
+    data() {
       return {}
     },
     methods: {},
-    mounted(){
+    mounted() {
 
     }
   }

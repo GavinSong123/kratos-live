@@ -24,4 +24,11 @@
     box-sizing: border-box;
   }
 
+  #app {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    background: rgb(243, 243, 244);
+  }
+
 </style>

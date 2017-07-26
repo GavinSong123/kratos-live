@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="750px" height="336px" viewBox="0 0 750 336" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FE3235" offset="0%"></stop>
+            <stop stop-color="#FF2D65" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FF3237" offset="0%"></stop>
+            <stop stop-color="#FF2F63" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FF4F47" offset="0%"></stop>
+            <stop stop-color="#FF2C66" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-4" points="370.317073 163 163 337.146341 588 337.146341"></polygon>
+        <filter x="-5.1%" y="-18.1%" width="110.1%" height="124.7%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="-10" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="兑换课程" transform="translate(0.000000, -998.000000)">
+            <g id="Group" transform="translate(0.000000, 997.000000)">
+                <polygon id="Path-18" fill="url(#linearGradient-1)" points="0 1 593 337 0 337"></polygon>
+                <polygon id="Path-18" fill="url(#linearGradient-2)" points="752 0.57459566 159 336.574596 752 336.574596"></polygon>
+                <g id="Path-19">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

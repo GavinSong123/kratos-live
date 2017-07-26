@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PlayGround from "../views/play-ground.vue";
 import TestMessagePanel from '../views/message-panel-test.vue';
+import CourseEntry from "../views/course-entry.vue";
 
 Vue.use(Router);
 
@@ -21,6 +22,10 @@ export default new Router({
       path: '/test-panel',
       name: 'TestPanel',
       component: TestMessagePanel
+    },
+    {
+      path: '/course-entry',
+      component: CourseEntry
     }
   ]
 })

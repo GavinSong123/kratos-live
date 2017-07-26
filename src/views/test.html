@@ -1,0 +1,158 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body {
+      background: #ffffff;
+      background-size: cover;
+    }
+
+    .qrcode {
+      width: 180px;
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      margin-left: -90px;
+    }
+  </style>
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience and security.</p>
+<![endif]-->
+<!-- Add your site or application content here -->
+<button class="qrcode" id="test">点击支付</button>
+
+<script src="/static/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.0.min.js"
+        integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.0.min.js"><\/script>')</script>
+<script src="/static/js/plugins.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+
+<script>
+  var useragent = navigator.userAgent;
+  if (useragent.match(/MicroMessenger/i) != 'MicroMessenger') {
+    // 这里警告框会阻塞当前页面继续加载
+    // 以下代码是用javascript强行关闭当前页面
+    var opened = window.open('about:blank', '_self');
+    /*opened.opener = null;
+    opened.close();*/
+  }
+
+  (function ($) {
+    $.getUrlParam = function (name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+    }
+  })(jQuery);
+  //用code换取openid
+  var code = $.getUrlParam('code');
+  var request = $.ajax({
+    url: "http://qr.ysdyfc.com/api/v1/auth/" + code,
+    method: "get",
+    dataType: "text",
+    async: false
+  });
+
+  request.done(function (x, y, z) {
+    open_id = x;
+    console.log(x);
+    console.log(y);
+    console.log(z);
+  });
+  request.fail(function (x, y) {
+    console.log("error");
+    console.log(x);
+    console.log(y);
+  })
+
+  //下订单获取订单id 应该在用户希望支付时触发
+  var request_deal = $.ajax({
+    url: "http://qr.ysdyfc.com/api/v1/pay",
+    method: "get",
+    headers: {
+      openid: open_id,
+      ip: returnCitySN["cip"]
+    },
+    dataType: "text",
+    async: false
+  });
+
+  request_deal.done(function (x, y, z) {
+    deal_obj = jQuery.parseJSON(x);
+    console.log(x);
+    console.log(y);
+    console.log(z);
+  });
+  request_deal.fail(function (x, y) {
+    console.log("error");
+    console.log(x);
+    console.log(y);
+  });
+
+  //调取微信支付，在调取之前需要获取订单的信息即上面的代码。
+  function onBridgeReady() {
+    WeixinJSBridge.invoke(
+      'getBrandWCPayRequest', {
+        "appId": deal_obj.appId,     //公众号名称，由商户传入
+        "timeStamp": deal_obj.timeStamp,         //时间戳，自1970年以来的秒数
+        "nonceStr": deal_obj.nonceStr, //随机串
+        "package": deal_obj.pkge,
+        "signType": deal_obj.signType,         //微信签名方式：
+        "paySign": deal_obj.paySign //微信签名
+      },
+      function (res) {
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+          //可以加上一个后台确认是否支付成功的代码，url为http://qr.ysdyfc.com/api/v1/pay/check,openid需要放在headers中。返回false or true
+        }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+        else {
+          //支付失败的处理
+        }
+      }
+    );
+  }
+
+  if (typeof WeixinJSBridge == "undefined") {
+    if (document.addEventListener) {
+      document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+      document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+      document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+  } else {
+    onBridgeReady();//这个函数用来触发微信支付 应该在订单获取成功后触发
+  }
+
+
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+  window.ga = function () {
+    ga.q.push(arguments)
+  };
+  ga.q = [];
+  ga.l = +new Date;
+  ga('create', 'UA-XXXXX-Y', 'auto');
+  ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+</body>
+</html>
