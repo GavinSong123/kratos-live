@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 24 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 17</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="48" height="48"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-17" transform="translate(-12.000000, -17.000000)">
+            <polyline id="Path-13" stroke="#E7EAEC" stroke-width="3" transform="translate(24.000000, 24.000000) rotate(90.000000) translate(-24.000000, -24.000000) " points="19 13 29 24 19 35"></polyline>
+            <g id="Rectangle-14">
+                <use fill-opacity="0" fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <rect stroke-opacity="0" stroke="#979797" stroke-width="1" x="0.5" y="0.5" width="47" height="47"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

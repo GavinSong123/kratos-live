@@ -83,7 +83,7 @@
   }
 </script>
 
-<style scoped="" lang="scss">
+<style scoped lang="scss">
 
   section {
     position: relative;

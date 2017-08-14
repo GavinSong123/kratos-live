@@ -1,7 +1,12 @@
 <template>
   <section>
-    <comment-panel></comment-panel>
+    <!--<comment-panel></comment-panel>-->
     <hr>
+    <cell-group title="111">
+      <p>123</p>
+      <p>123</p>
+      <p>123</p>
+    </cell-group>
     <!--<comment avatarUrl="http://s.amazeui.org/media/i/demos/pure-1.jpg">-->
       <!--66666666666666666666666666666666666666666666666666666666666666666666666666666-->
     <!--</comment>-->
@@ -39,9 +44,10 @@
   import Message from '../components/message.vue';
   import Comment from '../components/comment.vue';
   import CommentPanel from '../components/comment-panel.vue';
+  import CellGroup from '../components/cell-group.vue'
 
   export default {
-    components: {TextPod, AudioPod, ImagePod, Message, Comment, CommentPanel},
+    components: {TextPod, AudioPod, ImagePod, Message, Comment, CommentPanel, CellGroup},
     data () {
       return {
         msg: 'Welcome to Your Vue.js App'
