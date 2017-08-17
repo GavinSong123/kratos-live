@@ -9,6 +9,7 @@ import CourseCompleteOthers from "../views/course-complete-others.vue";
 import CourseCompleteShare from "../views/course-complete-share.vue";
 import PayStart from "../views/pay-start.vue";
 import PayComplete from "../views/pay-complete.vue";
+import CourseSchedule from "../views/course-schedule.vue";
 
 Vue.use(Router);
 
@@ -56,6 +57,10 @@ export default new Router({
     {
       path: '/pay-complete',
       component: PayComplete
+    },
+    {
+      path: '/course-schedule',
+      component: CourseSchedule
     }
   ]
 })
