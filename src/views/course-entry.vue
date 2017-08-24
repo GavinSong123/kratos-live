@@ -71,7 +71,7 @@
             return this.inputs[index]
           },
           function (val, oldVal) {
-            if (val && val != oldVal && 0 <= parseInt(val) <= 9) {
+            if (val && val !== oldVal && 0 <= parseInt(val) <= 9) {
               switchFocus.call(this, index);
             }
           })

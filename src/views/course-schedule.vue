@@ -1,25 +1,33 @@
 <template>
   <section>
     <div class = "image"><img src = "../assets/complete-medal.png"></div>
-    <div class = "title">{{title}}</div>
-    <div class = "description">{{description}}</div>
+    <div class = "title">{{courseInfo.courseName}}</div>
+    <div class = "description">{{courseInfo.description}}</div>
     <div class = "line"></div>
     <div class = "schedule"><img src = "../assets/schedule-subscribe-title.png"></div>
     <div class = "card-container">
-      <div class = "card disable">
-        <div class = "time">今天 15：00</div>
-        <div class = "desc"><img src = "../assets/schedule-disable.png"></div>
+      <div v-for="(v, i) in courseInfo.openTime"
+           @click="onSelect(i)"
+           v-bind:class="[{'disable': courseInfo.states[i]==='disable'}, {'available': courseInfo.states[i]==='available'}, {'selected': courseInfo.states[i]==='selected'}, 'card']">
+        <div class = "time">今天 {{v}}</div>
+        <div class = "desc" v-if="courseInfo.states[i]!=='disable'">已有1246人预约</div>
+        <div class = "desc" v-if="courseInfo.states[i]==='disable'" @click="onLookBack()"><img src = "../assets/schedule-disable.png"></div>
+        <div class="checked" v-if="courseInfo.states[i]==='selected'">
+          <img src = "../assets/scedule-check.png">
+        </div>
       </div>
-      <div class = "card">
-        <div class = "time">今天 15：00</div>
+      <div v-for="(v, i) in courseInfo.openTime"
+           v-bind:class="['available', {'selected': courseInfo.states[courseInfo.openTime.length + i]==='selected'}, 'card']"
+           @click="onSelect(courseInfo.openTime.length + i)">
+        <div class = "time">明天 {{v}}</div>
         <div class = "desc">已有1246人预约</div>
-      </div>
-      <div class = "card selected">
-        <div class = "time">今天 15：00</div>
-        <div class = "desc">已有1246人预约</div>
-        <div class="checked"><img src = "../assets/scedule-check.png"></div>
+        <div class="checked" v-if="courseInfo.states[courseInfo.openTime.length + i]==='selected'">
+          <img src = "../assets/scedule-check.png">
+        </div>
       </div>
     </div>
+    <img v-if="isSelect" src = "../assets/scedule-button.png" class="button" @click="onConfirm()">
+    <img src = "../assets/schedule-toast.png" class="toast" v-if="isConfirm">
   </section>
 </template>
 
@@ -31,15 +39,76 @@
     data() {
       return {
         msg: 'Welcome to Your Vue.js App',
+        courseInfo: {},
         title: '',
-        description: ''
+        description: '',
+        isConfirm: false,
+        isSelect: false
+      }
+    },
+    methods: {
+      refreshCourseState(){
+        this.courseInfo.states = [];
+        this.courseInfo.openTime.forEach((x, i) =>{
+          let date = new Date();
+          let curTime = date.getHours() * 60 + date.getMinutes();
+          let openTime = parseInt(x.split(":")[0]) * 60 + parseInt(x.split(":")[1]);
+          console.log(curTime, openTime);
+          if (curTime > openTime) {
+            this.courseInfo.states[i] = 'disable';
+          }else {
+            this.courseInfo.states[i] = 'available';
+          }
+        })
+      },
+      onConfirm(){
+        this.isConfirm = true;
+        setTimeout(()=>{
+//          this.$router.push('/course-detail');
+        }, 2000);
+      },
+      onSelect(i){
+        // tomorrow class can have higher index to present the state
+        if (this.courseInfo.states[i] === 'available' || i > this.courseInfo.openTime.length - 1){
+          //reset selected first
+          this.courseInfo.states.map( (x, i) => {
+            if(x === 'selected') {
+              return i;
+            }else {
+              return -1;
+            }
+          }).forEach(x => {
+            if (x!== -1){
+              this.courseInfo.states[x] = 'available';
+            }
+          });
+          this.courseInfo.states[i] = 'selected';
+          this.isSelect = true;
+        }
+        this.$forceUpdate();
+      },
+      onLookBack(){
+        this.$router.push({
+          path: '/test-panel',
+          query: {
+            courseId: this.courseId
+          }
+        })
       }
     },
     mounted() {
-      API.get("/course/list/0").then(res => {
-        this.title = res.data[0].courseName;
-        this.description = res.data[0].description;
-      });
+      let courseId = this.$route.query.courseId;
+      if (!!courseId) {
+        API.get("/course/info/0/" + courseId).then(res => {
+          this.courseInfo = res.data;
+          //TODO: backend typo
+          this.courseInfo.openTime = this.courseInfo.oepnTime;
+          this.courseInfo.openTime = this.courseInfo.openTime.replace(/"/g, '');
+          this.courseInfo.openTime = this.courseInfo.openTime.slice(1, -1).split(',');
+//          console.log(this.courseInfo.openTime);
+          this.refreshCourseState();
+        });
+      }
     }
   }
 </script>
@@ -88,7 +157,7 @@
   .card-container {
     width: 87%;
     display: flex;
-    margin: 0 auto;
+    margin: 0 auto 90px auto;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -130,6 +199,26 @@
         }
       }
     }
+  }
+
+  .button {
+    display: block;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+  .toast {
+    position: fixed;
+    display: block;
+    width: 120px;
+    height: 120px;
+    z-index: 3;
+    left: calc(50% - 60px);
+    top: calc(50vh - 60px);
+    margin: 0 auto;
   }
 
 </style>

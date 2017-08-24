@@ -89,13 +89,13 @@
       }
     },
     methods: {
-      onFootButtonClick(){
+      onFootButtonClick() {
         this.$router.push({
           path: '/course-schedule',
           query: {
-
+            courseId: 4
           }
-        })
+        });
       }
     },
     mounted() {

@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-let baseUrl = "http://localhost:8081/api/v1";
+let baseUrl = "http://10.19.139.123:8081/api/v1";
 let headers = {
   'openid': "oSZBm0Tu7Fu-iazFQ0FaV8_3Ufa4",
   "Content-Type": "application/json"
