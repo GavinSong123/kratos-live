@@ -9,17 +9,38 @@
     <cell-group class = "teacher-group" title = "导师介绍">
       <div class = "teacher-container">
         <avatar-img class = "img" src = "/static/logo.png"></avatar-img>
-        <div class = "content">
+        <div class = "desc">
           <p>{{teacherDesc}}</p>
         </div>
       </div>
     </cell-group>
 
     <cell-group class = "detail-group" title = "课程介绍">
-
+      <div class = "content">
+        <p>本课程由BAT高级培训官耗时11个月倾力编写，结合大表姐及数十个同行对过往PPT经验的提炼，从基础培训到思维拓展，适用于职场菜鸟以及急需技能提升人群，用丰富经验指引职人避坑。</p>
+        <br>
+        <p>① 精心打磨的课程计划：</p>
+        <p>科学易懂的教学大纲，由浅入深，从ppt基础知识到案例分析，不仅传授技巧，更启发ppt思维。用工作中的实战经验教授ppt速成秘诀。授人以鱼更授人以渔。</p>
+        <img src = "../assets/detail-1.png">
+        <p>② 及时方便的课堂体验：</p>
+        <p>实时直播，一天多节，根据自己计划合理安排学习时间。</p>
+        <p>职人社群，完备的知识分享系统，强大的人脉拓展工具。</p>
+        <p>精华讲义，支持回看，易于保存精华知识，在工作中随学随用。</p>
+        <img src = "../assets/detail-2.png">
+        <p>半小时，10天，</p>
+        <p>一杯咖啡的时间，</p>
+        <p>和你一起玩转PPT！</p>
+      </div>
     </cell-group>
 
     <cell-group class = "class-group" title = "课程安排">
+      <div class = "cell" v-for = "course in courses">
+        <cell isExpandable="true" :title="course.courseName">
+          <div class="desc">
+            {{course.description}}
+          </div>
+        </cell>
+      </div>
     </cell-group>
 
     <cell-group class = "note-group" title = "课程须知">
@@ -42,8 +63,9 @@
     </cell-group>
 
     <div class = "button-group">
-      <div class = "button">
-        <span>立刻学习</span> <img src = "../assets/cell-expand-go.svg">
+      <div class = "button" @click="onFootButtonClick()">
+        <span>立刻学习</span>
+        <img src = "../assets/cell-expand-go.svg">
       </div>
     </div>
 
@@ -53,20 +75,36 @@
 <script>
   import AvatarImg from "../components/avatar-img.vue";
   import CellGroup from '../components/cell-group.vue'
+  import Cell from '../components/cell.vue'
+  import * as API from '../util/api';
 
   export default {
-    components: {AvatarImg, CellGroup},
+    components: {AvatarImg, CellGroup, Cell},
     data() {
       return {
         msg: 'Welcome to Your Vue.js App',
         "teacherDesc": "大表姐（Sis）\n" + " ·非重点院校毕业的职场小白到BAT高级培训官\n" + " ·职场摸爬滚打5年\n" + " ·苦练ppt成为职场竞争中的杀手锏\n" + " ·坚信工具的力量，希望能让更多人，把ppt踩在脚下",
-        avatarImageUrlsSource: []
+        avatarImageUrlsSource: [],
+        courses: []
       }
-    }
-    , mounted() {
+    },
+    methods: {
+      onFootButtonClick(){
+        this.$router.push({
+          path: '/course-schedule',
+          query: {
+
+          }
+        })
+      }
+    },
+    mounted() {
       for (let i = 0; i < 18; i++) {
-        this.avatarImageUrlsSource.push('/static/logo.png');
+        this.avatarImageUrlsSource.push('https://unsplash.it/' + (100 + i));
       }
+      API.get('/course/list/0').then(d => {
+        this.courses = d.data;
+      })
     }
   }
 </script>
@@ -76,6 +114,25 @@
   section.host {
     display: block;
     background: rgb(243, 243, 244);
+  }
+
+  .content {
+    padding: 12px 20px;
+    p {
+      font-size: 14px;
+      line-height: 20px;
+      width: 100%;
+      color: #686B6D;
+      display: block;
+      padding: 0 0;
+      margin: 0 2px;
+      word-wrap: break-word;
+    }
+    img {
+      display: block;
+      width: 335px;
+      margin: 18px auto;
+    }
   }
 
   .course-container {
@@ -120,7 +177,7 @@
         width: 46px;
         height: 46px;
       }
-      .content {
+      .desc {
         display: inline-block;
         vertical-align: top;
         width: calc(100% - 93px);
@@ -158,22 +215,19 @@
     strong {
       color: #ED5566;
     }
+    .desc {
+      margin: 11px 22px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #686B6D;
+      display: block;
+      padding: 0 0;
+      word-wrap: break-word;
+    }
   }
 
   .note-group {
     width: 100%;
-    .content {
-      padding: 12px 20px;
-      p {
-        font-size: 14px;
-        width: 100%;
-        color: #686B6D;
-        display: block;
-        padding: 0 0;
-        margin: 0 2px;
-        word-wrap: break-word;
-      }
-    }
   }
 
   .button-group {

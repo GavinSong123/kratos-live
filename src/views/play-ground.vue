@@ -7,6 +7,7 @@
       <p>123</p>
       <p>123</p>
     </cell-group>
+    <cell></cell>
     <!--<comment avatarUrl="http://s.amazeui.org/media/i/demos/pure-1.jpg">-->
       <!--66666666666666666666666666666666666666666666666666666666666666666666666666666-->
     <!--</comment>-->

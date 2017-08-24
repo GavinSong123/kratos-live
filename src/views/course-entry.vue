@@ -32,11 +32,12 @@
         </div>
       </div>
       <div class="confirm-group">
-        <div class="confirm-button" @click=""><span>立即兑换</span></div>
+        <div class="confirm-button" @click="onClick()"><span>立即兑换</span></div>
       </div>
     </div>
     <img src="../assets/entry-envelop-back.svg" class="envelop-back">
     <img src="../assets/entry-envelop.svg" class="envelop-front">
+    <img src = "../assets/entry-complete.png" v-if="ifToast" class = "complete-img">
   </section>
 </template>
 
@@ -49,11 +50,21 @@
     data() {
       return {
         msg: 'Welcome to Your Vue.js App',
-        inputs: [null, null, null, null]
+        inputs: [null, null, null, null],
+        ifToast: false
       }
     },
+    methods: {
+      onClick() {
+        if(this.inputs[0] && this.inputs[1] && this.inputs[2] && this.inputs[3]) {
+          this.ifToast = true;
+          setTimeout(()=>{
+            this.$router.push('/course-detail');
+          }, 2000);
+        }
+      },
+    },
     mounted() {
-
       var watchIndex = function (index) {
         this.$watch(
           function () {
@@ -219,6 +230,16 @@
     position: absolute;
     bottom: 0;
     z-index: 3;
+  }
+
+  .complete-img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    z-index: 2;
+    position: fixed;
+    left: calc(50% - 60px);
+    top: calc(50vh - 60px);
   }
 
 </style>

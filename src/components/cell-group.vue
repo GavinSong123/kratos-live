@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    props: ['title', 'expand-text'],
+    props: ['title'],
     data() {
       return {}
     },

@@ -3,8 +3,8 @@
     <div class="title-container">
       <span>{{title}}</span>
       <div v-if="isExpandable" class="button">
-        <img v-if="!isExpanded" src="../assets/cell-expand-show.svg">
-        <img v-if="isExpanded" src="../assets/cell-expand-hide.svg">
+        <img v-if="!isExpanded" class="expand" @click="onClick()" src="../assets/cell-expand-show.svg">
+        <img v-if="isExpanded" @click="onClick()" src="../assets/cell-expand-hide.svg">
       </div>
     </div>
     <div class="content-container" v-if="isExpanded">
@@ -21,7 +21,11 @@
         isExpanded: false
       }
     },
-    methods: {},
+    methods: {
+      onClick(){
+        this.isExpanded = !this.isExpanded;
+      }
+    },
     mounted() {
 
     }
@@ -34,7 +38,7 @@
     position: relative;
     display: block;
     width: 100%;
-    margin: 15px 0;
+    margin: 1px 0;
     background: white;
   }
 
@@ -49,17 +53,25 @@
     span {
       display: inline-block;
       font-size: 14px;
-      margin: 13px 9px;
+      margin: 12px 22px;
       color: #3A3434;
       height: 18px;
       vertical-align: middle;
     }
 
     .button {
+      position: absolute;
+      top: 10px;
+      right: 22px;
       display: inline-block;
-      width: 5px;
-      height: 18px;
       vertical-align: middle;
+      img {
+        width: 11px;
+        vertical-align: middle;
+      }
+      img.expand {
+        transform: rotate(-90deg);
+      }
     }
   }
 
