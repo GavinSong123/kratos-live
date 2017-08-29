@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class = "image"><img src = "../assets/complete-medal.png"></div>
+    <div class = "image"><img :src = "courseInfo.img"></div>
     <div class = "title">{{courseInfo.courseName}}</div>
     <div class = "description">{{courseInfo.description}}</div>
     <div class = "line"></div>
@@ -62,10 +62,25 @@
         })
       },
       onConfirm(){
-        this.isConfirm = true;
-        setTimeout(()=>{
-//          this.$router.push('/course-detail');
-        }, 2000);
+        let selectedIndex = this.courseInfo.states.findIndex(x => x === 'selected');
+        console.log(selectedIndex);
+        if ( selectedIndex !== -1) {
+          let offset = selectedIndex >= this.courseInfo.openTime.length? 1: 0;
+          let body = {
+            "offset": offset,
+            "time": offset === 0 ? this.courseInfo.openTime[selectedIndex] : this.courseInfo.openTime[selectedIndex - this.courseInfo.openTime.length]
+          };
+          API.post("/course/subscribe/0/" + this.courseInfo.courseId, body)
+            .then(res => {
+              setTimeout(() => {
+//                this.$router.push('/course-entry');
+              }, 2000);
+            })
+            .catch(err => {
+//                this.$router.push('/course-entry');
+            });
+
+        }
       },
       onSelect(i){
         // tomorrow class can have higher index to present the state
@@ -101,10 +116,14 @@
       if (!!courseId) {
         API.get("/course/info/0/" + courseId).then(res => {
           this.courseInfo = res.data;
+          this.courseInfo.img = API.BaseUrl + res.data.img;
           //TODO: backend typo
-          this.courseInfo.openTime = this.courseInfo.oepnTime;
           this.courseInfo.openTime = this.courseInfo.openTime.replace(/"/g, '');
-          this.courseInfo.openTime = this.courseInfo.openTime.slice(1, -1).split(',');
+          if (this.courseInfo.openTime.slice(1, -1).split(',').length > 0) {
+            this.courseInfo.openTime = this.courseInfo.openTime.slice(1, -1).split(',');
+          } else {
+            this.courseInfo.openTime = [];
+          }
 //          console.log(this.courseInfo.openTime);
           this.refreshCourseState();
         });

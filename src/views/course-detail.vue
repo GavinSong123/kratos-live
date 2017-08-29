@@ -93,7 +93,7 @@
         this.$router.push({
           path: '/course-schedule',
           query: {
-            courseId: 4
+            courseId: 1
           }
         });
       }
