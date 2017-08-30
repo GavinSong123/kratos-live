@@ -18,9 +18,9 @@
   import Comment from '../components/comment.vue';
   import mockComment from  "../mock/mock-comments.json"
 
+
   export default {
     components: {Comment},
-    props: ['commentSource'],
     data () {
       return {
         commentSource: {},
@@ -101,7 +101,7 @@
     },
     mounted(){
       //this tree variables are only wire once
-//      this.commentSource = mockComment.comments;
+      this.commentSource = mockComment.comments;
       this.durationTime = this.commentSource.reduce((acc, cur) => acc + cur.offset, 0);
       this.startTime = 0;
       this.curTime = 1000;

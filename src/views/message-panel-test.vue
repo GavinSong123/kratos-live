@@ -1,4 +1,4 @@
-<template>
+t<template>
   <section>
     <div class="control-header">
       <div class="list">
@@ -27,24 +27,22 @@
         <div class="title">PPT突破第 1 堂课：爱的抱抱</div>
         <div class="info">距开播： <span class="time">2小时30分</span></div>
       </div>
-      <div class="messages-scroll" >
+      <div class="messages-scroll">
         <div class="message" v-for="message in messages">
           <message :title="message.teacher.title" :name="message.teacher.name"
-                   :avatarUrl="message.teacher.avatar" :message="message"
-                   @mounted="scrollToCurrent"></message>
+                   :avatarUrl="message.teacher.avatar" :message="message" v-on:mounted="scrollToCurrent"></message>
         </div>
         <div class="bottom-hint" v-if="isLastMessageLoaded">直播结束</div>
       </div>
     </div>
     <div class="comment-panel">
-      <comment-panel :commentSource = "commentSource" ref="commentPanel"></comment-panel>
+      <comment-panel ref="commentPanel"></comment-panel>
     </div>
     <div class="comment-input">
       <img class="pre-icon" src="../assets/icon.svg">
       <textarea class="input" rows="2" type="text" autofocus v-model="input"></textarea>
       <span class="submit-button" @click="onSubmitClick()">发送</span>
     </div>
-    <img src = "../assets/panel-complete.png" class="complete-button" v-if="isShowCompleteButton" @click="onCompleteClick()">
   </section>
 </template>
 
@@ -55,21 +53,18 @@
   import Message from '../components/message.vue';
   import mockScripts from '../mock/mock-script.json'
   import CommentPanel from '../components/comment-panel.vue';
-  import * as API from '../util/api';
 
   export default {
     components: {TextPod, AudioPod, ImagePod, Message, CommentPanel},
     data () {
       return {
         scriptSource: {},
-        commentSource: {},
         messages: [],
         durationTime: 0,
         startTime: 0,
         curTime: 0,
         isLastMessageLoaded: false,
         isExpanded: false,
-        isShowCompleteButton: false,
         input: ''
       }
     },
@@ -131,52 +126,19 @@
       onSubmitClick(){
         this.$refs.commentPanel.submitComment(this.input);
         this.input='';
-      },
-
-      onCompleteClick() {
-//        this.$router
-      },
-
-      // this function is to trigger&close the page footer button
-      onNativeScroll() {
-        if (this.isLastMessageLoaded && this.$refs.scroll.scrollHeight - (this.$refs.scroll.scrollTop + window.innerHeight) <= 10) {
-          this.isShowCompleteButton = true;
-        } else {
-          this.isShowCompleteButton = false;
-        }
-//        console.log(this.$refs.scroll.scrollTop + window.innerHeight, this.$refs.scroll.scrollHeight);
       }
     },
     mounted(){
-//      // mock script
-//      this.scriptSource = mockScripts.messages.map(x => {
-//        x.teacher = mockScripts.teachers.find(y => y.id === x.teacherId);
-//        return x;
-//      });
-
-      // get source
-      let courseId = this.$route.query.courseId;
-      if (!!courseId) {
-        API.get("/course/info/0/" + courseId).then(res => {
-            return res.data;
-          })
-          .then( d => {
-            let scriptP = API.getResource(d.script);
-//            let commentP = API.getResource(d.);
-//            return
-          })
-
-      }
-
-      // this tree variables are only wire once
+      //this tree variables are only wire once
+      this.scriptSource = mockScripts.messages.map(x => {
+        x.teacher = mockScripts.teachers.find(y => y.id === x.teacherId);
+        return x;
+      });
       this.durationTime = this.scriptSource.reduce((acc, cur) => acc + cur.offset, 0);
       this.startTime = 0;
 
       this.curTime = 1000;
       this.step();
-
-      // add scroll event listener
-      this.$refs.scroll.addEventListener('scroll', this.onNativeScroll);
     }
   }
 </script>
@@ -369,15 +331,6 @@
       background: #3A3434;
       border-radius: 3px;
     }
-  }
-
-  .complete-button {
-    display: block;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 2;
   }
 
 </style>
