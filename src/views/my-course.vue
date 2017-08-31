@@ -130,11 +130,7 @@
 
     .customize-container {
       position: absolute;
-<<<<<<< HEAD
       top: 22.5%;
-=======
-      top: 20%;
->>>>>>> 6846f8a... add my-course page
       width: 100%;
     }
     .customize-message {
@@ -171,11 +167,7 @@
 
     .course-list {
       position: absolute;
-<<<<<<< HEAD
       top: 25%;
-=======
-      top: 22.5%;
->>>>>>> 6846f8a... add my-course page
       list-style: none;
       padding-left: 0;
       background: #fff;
@@ -189,11 +181,7 @@
           transform: scale(0.6);
         }
         .detail {
-<<<<<<< HEAD
           padding-left: 60px;
-=======
-          padding-left: 40px;
->>>>>>> 6846f8a... add my-course page
           padding-top: 15px;
           text-align: left;
           display: inline-block;
