@@ -106,7 +106,7 @@
         this.$router.push({
           path: '/test-panel',
           query: {
-            courseId: this.courseId
+            courseId: this.courseInfo.courseId
           }
         })
       }
@@ -119,7 +119,7 @@
           this.courseInfo.img = API.BaseUrl + res.data.img;
           //TODO: backend typo
           this.courseInfo.openTime = this.courseInfo.openTime.replace(/"/g, '');
-          if (this.courseInfo.openTime.slice(1, -1).split(',').length > 0) {
+          if (this.courseInfo.openTime && this.courseInfo.openTime.length > 0) {
             this.courseInfo.openTime = this.courseInfo.openTime.slice(1, -1).split(',');
           } else {
             this.courseInfo.openTime = [];

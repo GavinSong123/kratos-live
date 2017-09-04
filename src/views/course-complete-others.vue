@@ -2,20 +2,23 @@
   <section>
     <div class="header-container">
       <img src = "../assets/complete-header.png" class = "title">
+      <div class="id">
+        <span>{{courseInfo.courseId}}</span>
+      </div>
     </div>
 
     <div class="content-container">
       <div class="content-1">Zeo, 恭喜你已完成</div>
-      <div class="content-2">PPT突破第 01 堂课：爱的抱一抱，抱着妹妹上花轿</div>
+      <div class="content-2">{{courseInfo.courseName}}</div>
       <div class="splitter">
         <img src = "../assets/complete-split-line.svg" >
       </div>
-      <div class="notes">
+      <div class="notes" @click = "onShare()">
         <img src = "../assets/complete-notes.png">
       </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" @click = "onMyCourse()">
       <img src = "../assets/detail-footer.png">
     </div>
     <div class="footer-button">
@@ -25,11 +28,36 @@
 </template>
 
 <script>
+  import * as API from '../util/api';
+
   export default {
     components: {},
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        courseInfo: {},
+        courseId: 1
+      }
+    },
+    methods: {
+      onMyCourse() {
+
+      },
+      onShare(){
+        this.$router.push({
+          path: '/course-complete-share',
+          query: {
+            courseId: this.courseId
+          }
+        })
+      }
+    },
+    mounted() {
+      this.courseId = this.$route.query.courseId;
+      if (!!this.courseId) {
+        API.get("/course/info/0/" + this.courseId).then(res => {
+          this.courseInfo = res.data;
+        });
       }
     }
   }
@@ -51,6 +79,19 @@
       left: calc(50% - 65px);
       img {
         width: 130px;
+      }
+      .id {
+        position: absolute;
+        top: 44px;
+        width: 100px;
+        left: calc(50% - 50px);
+        span {
+          display: block;
+          margin: 0 auto;
+          font-size: 40px;
+          font-weight: bold;
+          color: white;
+        }
       }
     }
 

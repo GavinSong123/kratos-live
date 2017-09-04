@@ -61,8 +61,9 @@
     components: {TextPod, AudioPod, ImagePod, Message, CommentPanel},
     data () {
       return {
-        scriptSource: {},
-        commentSource: {},
+        courseId: 1,
+        scriptSource: [],
+        commentSource: [],
         messages: [],
         durationTime: 0,
         startTime: 0,
@@ -97,7 +98,7 @@
         let accOffset = 0;
         let needLoad = this.scriptSource.filter(x => {
           accOffset += x.offset;
-          return (loadedOffest < accOffset) && (accOffset <= curOffset);
+          return (loadedOffest <= accOffset) && (accOffset <= curOffset);
         });
 
         //2 .add to messages to render view
@@ -134,7 +135,17 @@
       },
 
       onCompleteClick() {
-//        this.$router
+        debugger
+        if (this.courseId === '1') {
+          this.$router.push('/course-complete-first')
+        } else {
+          this.$router.push({
+            path: '/course-complete-others',
+            query: {
+              courseId: this.courseId
+            }
+          })
+        }
       },
 
       // this function is to trigger&close the page footer button
@@ -144,7 +155,7 @@
         } else {
           this.isShowCompleteButton = false;
         }
-//        console.log(this.$refs.scroll.scrollTop + window.innerHeight, this.$refs.scroll.scrollHeight);
+//        console.log(this.isLastMessageLoaded, this.$refs.scroll.scrollTop + window.innerHeight, this.$refs.scroll.scrollHeight);
       }
     },
     mounted(){
@@ -155,28 +166,52 @@
 //      });
 
       // get source
-      let courseId = this.$route.query.courseId;
-      if (!!courseId) {
-        API.get("/course/info/0/" + courseId).then(res => {
+      this.courseId = this.$route.query.courseId;
+      if (!!this.courseId) {
+        API.get("/course/info/0/" + this.courseId).then(res => {
             return res.data;
           })
           .then( d => {
-            let scriptP = API.getResource(d.script);
-//            let commentP = API.getResource(d.);
-//            return
+            let scriptP = API.get("/resource/script/" + d.courseName);
+            let commentP = API.get("/resource/comment/" + d.courseName);
+            return Promise.all([scriptP, commentP]);
           })
+          .then( d => {
+            if (d[0] && d[0].data) {
+              // avatar url
+              // TODO: what this url is?
+              d[0].data.teachers.forEach(x => {
+                x.avatar = API.BaseUrl + x.avatar;
+              });
+              // join message teacher field
+              this.scriptSource = d[0].data.messages.map(x => {
+                x.teacher = d[0].data.teachers.find(y => y.id === x.teacherId);
+                return x;
+              });
+              // resources url
+              this.scriptSource.forEach(x => {
+                if (x.type === 'audio' || x.type === 'pic') {
+                  x.resources =  API.BaseUrl + '/api/v1/' + x.resources;
+                }
+              })
+            }
+            if (d[1] && d[1].data) {
+              this.commentSource = d[1].data.comments;
+            }
+            return;
+          })
+          .then( d => {
+            // this tree variables are only wire once
+            this.durationTime = this.scriptSource.reduce((acc, cur) => acc + cur.offset, 0);
+            this.startTime = 0;
 
+            this.curTime = 1000;
+            this.step();
+
+            // add scroll event listener
+            this.$refs.scroll.addEventListener('scroll', this.onNativeScroll);
+          })
       }
-
-      // this tree variables are only wire once
-      this.durationTime = this.scriptSource.reduce((acc, cur) => acc + cur.offset, 0);
-      this.startTime = 0;
-
-      this.curTime = 1000;
-      this.step();
-
-      // add scroll event listener
-      this.$refs.scroll.addEventListener('scroll', this.onNativeScroll);
     }
   }
 </script>

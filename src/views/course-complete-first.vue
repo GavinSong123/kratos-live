@@ -15,7 +15,7 @@
         <img src = "../assets/complete-red-package.png">
         <div>*红包已下发至你的账户，可用于购买付费课程</div>
       </div>
-      <div class="button">
+      <div class="button" @click="onClick()">
         立刻预约第 2 节课上课时间
       </div>
     </div>
@@ -32,6 +32,11 @@
     data () {
       return {
         msg: 'Welcome to Your Vue.js App'
+      }
+    },
+    methods: {
+      onClick() {
+        this.$router.push('/pay-start');
       }
     }
   }

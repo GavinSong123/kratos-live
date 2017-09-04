@@ -22,8 +22,11 @@
     methods: {
       onClick(){
         this.payStep++;
+        if (this.payStep === 3) {
+              this.$router.push('/pay-complete');
+          }
+        }
       }
-    }
   }
 </script>
 

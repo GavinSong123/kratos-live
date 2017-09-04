@@ -23,7 +23,6 @@
     props: ['commentSource'],
     data () {
       return {
-        commentSource: {},
         comments: [],
         showedComments: [],
         commentCount: 3000,
@@ -33,7 +32,16 @@
         curTime: 0,
       }
     },
-
+    watch: {
+      commentSource: function (val) {
+        if (!!val && val.length) {
+          this.durationTime = this.commentSource.reduce((acc, cur) => acc + cur.offset, 0);
+          this.startTime = 0;
+          this.curTime = 1000;
+          this.step();
+        }
+      }
+    },
     methods: {
       step(){
         // 1. load messages before curTime, lazy load manner
@@ -102,10 +110,6 @@
     mounted(){
       //this tree variables are only wire once
 //      this.commentSource = mockComment.comments;
-      this.durationTime = this.commentSource.reduce((acc, cur) => acc + cur.offset, 0);
-      this.startTime = 0;
-      this.curTime = 1000;
-      this.step();
     }
   }
 </script>
