@@ -18,10 +18,10 @@
       </div>
     </div>
 
-    <div class="footer" @click = "onMyCourse()">
+    <div class="footer" >
       <img src = "../assets/detail-footer.png">
     </div>
-    <div class="footer-button">
+    <div class="footer-button" @click = "onMyCourse()">
       <u>我的课表</u>
     </div>
   </section>
@@ -41,7 +41,7 @@
     },
     methods: {
       onMyCourse() {
-
+        this.$router.push('/my-course');
       },
       onShare(){
         this.$router.push({
