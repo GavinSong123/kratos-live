@@ -10,13 +10,10 @@
       <span class="rate">3/10</span>
     </div>
 
-    <div class="customize-container">
-      <div class="customize-message">
-        <div class="circle-icon"></div>
-        你可预约定制第3节课课程时间
-      </div>
-
-      <button class="customization">定制</button>
+    <div class="start-time">
+      <div class="hint">距第 3 堂课程开始还有</div>
+      <div class="time">0天2小时30分钟</div>
+      <button class="edit">修改</button>
     </div>
 
     <ul class="course-list">
@@ -39,7 +36,19 @@
         <div class="detail">
           <div class="title">
             <span>PPT突破第 1 堂课：爱的抱抱</span>
-            <div class="order-btn order">未预约</div>
+            <div class="order-btn finish">已完成</div>
+          </div>
+          <div class="time">课程开始时间：3月29日 20：00</div>
+        </div>
+      </li>
+      <li class="course">
+        <div class="img">
+          <img src="../assets/my-course-1.svg"/>
+        </div>
+        <div class="detail">
+          <div class="title">
+            <span>PPT突破第 1 堂课：爱的抱抱</span>
+            <div class="order-btn end">已结束</div>
           </div>
           <div class="time">课程开始时间：3月29日 20：00</div>
         </div>
@@ -118,41 +127,33 @@
     }
   }
 
-  .customize-container {
+  .start-time {
+    height: 109px;
     width: 100%;
-    height: 54px;
-    padding: 15px;
-    display: inline-flex;
-  }
+    text-align: center;
+    padding-top: 5px;
 
-  .customize-message {
-    margin: auto 0;
-    width: 199px;
-    height: 24px;
-    border: 2px #000 solid;
-    border-radius: 12px;
-    font-size: 12px;
-    line-height: 24px;
-
-    .circle-icon {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #000;
-      display: inline-block;
+    > .hint {
+      font-size: 12px;
+      color: #9b9b9b;
+      padding: 5px;
     }
-  }
 
-  .customization {
-    margin-left: 8em;
-    width: 49px;
-    height: 24px;
-    border: 2px #e0b190 solid;
-    color: #e0b190;
-    font-size: 12px;
-    border-radius: 12px;
-    background: transparent;
-    outline: none;
+    > .time {
+      font-size: 24px;
+      color: #3a3434;
+      padding: 5px;
+    }
+
+    > .edit {
+      height: 24px;
+      border: 2px #e0b190 solid;
+      color: #e0b190;
+      font-size: 12px;
+      border-radius: 12px;
+      background: transparent;
+      outline: none;
+    }
   }
 
   .order-btn {
@@ -167,11 +168,11 @@
   }
 
   .course-list {
-    margin: 0;
-    top: 25%;
     list-style: none;
     padding-left: 0;
+    margin: 0;
     background: #fff;
+    height: 345px;
     width: 100%;
 
     .course {
@@ -193,6 +194,14 @@
           display: inline-flex;
           > .order {
             background: #e0b190;
+          }
+
+          > .finish {
+            background: #d8d8d8;
+          }
+
+          > .end {
+            background: #f53149;
           }
         }
         .time {

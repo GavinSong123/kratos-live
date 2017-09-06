@@ -11,6 +11,7 @@ import PayStart from "../views/pay-start.vue";
 import PayComplete from "../views/pay-complete.vue";
 import CourseSchedule from "../views/course-schedule.vue";
 import MyCourse from "../views/my-course.vue";
+import MyCourseTime from "../views/my-course-time.vue";
 
 Vue.use(Router);
 
@@ -66,6 +67,10 @@ export default new Router({
     {
       path: '/my-course',
       component: MyCourse
+    },
+    {
+      path: '/my-course-time',
+      component: MyCourseTime
     }
   ]
 })
